@@ -1,12 +1,15 @@
 # Deploy K3s
-> Install k3s on a Raspberry Pi 4 Cluster running Ubuntu Server 22.04 LTS
+> Install [K3s](https://www.rancher.com/products/k3s) on a Raspberry Pi 4 Cluster running [Ubuntu Server 22.04 LTS](https://ubuntu.com/download/raspberry-pi). The cluster will be able to be imported into [Rancher](https://www.rancher.com/why-rancher). Putting this here in hopes it helps someone or myself later on :D.
 
 What is K3s?
 
 K3s is a lightweight Kubernetes distribution created by Rancher Labs, and it is fully certified by the Cloud Native Computing Foundation (CNCF). K3s is highly available and production-ready. It has a very small binary size and very low resource requirements.
 
 ## Raspberry Pi Setup
-Do this on each pi.
+
+Install Ubuntu Server 22.04 LTS on each Raspberry Pi.
+
+Then do the following for each pi.
 
 Edit the host name ex: `k3s-master` for the master and `k3s-worker-01`, `k3s-worker-02` etc for the workers.
 ```bash
