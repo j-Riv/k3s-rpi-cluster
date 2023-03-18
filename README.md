@@ -1,5 +1,32 @@
 # Deploy K3s
-> Install k3s on a Raspberry Pi 4 Cluster
+> Install k3s on a Raspberry Pi 4 Cluster running Ubuntu Server 22.04 LTS
+
+What is K3s?
+
+K3s is a lightweight Kubernetes distribution created by Rancher Labs, and it is fully certified by the Cloud Native Computing Foundation (CNCF). K3s is highly available and production-ready. It has a very small binary size and very low resource requirements.
+
+## Raspberry Pi Setup
+Do this on each pi.
+
+Edit the host name ex: `k3s-master` for the master and `k3s-worker-01`, `k3s-worker-02` etc for the workers.
+```bash
+sudo nano /etc/hostname
+```
+
+Configure boot options.
+
+Add `cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1 swapaccount=1` to the end of the first line.
+
+```bash
+sudo nano /boot/firmware/cmdline.txt
+```
+
+Install updates and reboot
+
+```bash
+sudo apt update && sudo apt dist-upgrade
+sudo reboot
+```
 
 ## Install K3s
 
@@ -43,17 +70,33 @@ helm install \
 ## Certificates
 > Lets Encrypt
 
-[Troubleshooting](https://cert-manager.io/docs/troubleshooting/acme/)
 ```bash
 # create namespace for cert
 kubectl create namespace NAME_OF_NAMESPACE
 # create cloudflare secret
 kubectl apply -f secret-cloudflare.yml
-# create cluster issueer
+# create cluster issuer
 kubectl apply -f clusterisser-acme.yml
 # create certificate
 # make name and secretName ex domain-dev
 kubectl apply -f certificate.yml
+```
+
+[Troubleshooting Certificates](https://cert-manager.io/docs/troubleshooting/acme/)
+
+```bash
+# get certificates
+kubectl get certificates;
+# view certificates
+kubectl describe certificate name-of-certificate
+# get certificate requests
+kubectl get certificaterequest
+# view certificate reuqest
+kubectl describe certificaterequest name-of-certificate-request
+# get orders
+kubectl get orders
+# view order
+kubectl describe order name-of-order
 ```
 
 ## Middleware
