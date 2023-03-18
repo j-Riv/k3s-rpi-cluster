@@ -74,11 +74,13 @@ helm install \
 # create namespace for cert
 kubectl create namespace NAME_OF_NAMESPACE
 # create cloudflare secret
+# use global api key or create a token and grant all zones
 kubectl apply -f secret-cloudflare.yml
 # create cluster issuer
+# choose server: staging or production, replace email set reference to api key or token from above
 kubectl apply -f clusterisser-acme.yml
 # create certificate
-# make name and secretName ex domain-dev
+# make name and secretName the same so its not confusing later, add namespace
 kubectl apply -f certificate.yml
 ```
 
@@ -91,7 +93,7 @@ kubectl get certificates;
 kubectl describe certificate name-of-certificate
 # get certificate requests
 kubectl get certificaterequest
-# view certificate reuqest
+# view certificate request
 kubectl describe certificaterequest name-of-certificate-request
 # get orders
 kubectl get orders
